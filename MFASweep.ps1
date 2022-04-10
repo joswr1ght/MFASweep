@@ -706,12 +706,7 @@ Function Invoke-O365ActiveSyncAuth{
     try {
 	    $easlogin = Invoke-WebRequest -Uri $EASURL -Headers $Headers -Method Get -ErrorAction Stop
         }catch {
-            $resp = $_.Exception.Response.GetResponseStream()
-            $reader = New-Object System.IO.StreamReader($resp)
-            $reader.BaseStream.Position = 0
-            $reader.DiscardBufferedData()
-            $res = $reader.ReadToEnd()
-            $StatusCode = $_.Exception.Response.StatusCode.Value__
+            $StatusCode = [int]$_.Exception.Response.StatusCode
         }
         if ($StatusCode -eq 505)
 	    {
